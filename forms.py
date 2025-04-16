@@ -1,23 +1,12 @@
 from django import forms
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
-from .models import UserProfile
+from .models import Post, Comment
 
-class RegisterForm(UserCreationForm):
-    email = forms.EmailField(required=True)
-
+class PostForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        model = Post
+        fields = ['platform', 'content']
 
-class UserUpdateForm(forms.ModelForm):
-    email = forms.EmailField(required=False)
-
+class CommentForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ['username', 'email']
-
-class ProfileUpdateForm(forms.ModelForm):
-    class Meta:
-        model = UserProfile
-        fields = ['twitter_token', 'facebook_token']
+        model = Comment
+        fields = ['content']
