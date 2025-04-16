@@ -1,9 +1,15 @@
-from django.urls import path
-from . import views
+from django.contrib import admin
+from django.urls import path, include
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('', views.dashboard_view, name='dashboard'),
-    path('create/', views.create_post, name='create_post'),
-    path('comment/<int:post_id>/', views.comment_post, name='comment_post'),
-    path('like/<int:post_id>/', views.like_post, name='like_post'),
+    path('admin/', admin.site.urls),
+    
+    # Auth
+    path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='accounts/logout.html'), name='logout'),
+
+    # Apps
+    path('', include('dashboard.urls')),          # Home = dashboard
+    path('accounts/', include('accounts.urls')),  # Register/Profile
 ]
